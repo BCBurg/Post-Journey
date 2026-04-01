@@ -37,23 +37,25 @@
   .banner {
     width: 100%;
     display: block;
-    height: 280px;
-    object-fit: cover;
-    object-position: center 30%;
+    height: 260px;
+    background-image: url('REFLECT_REFRESH_Post-Journey_Survey_COVER.png');
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
   }
 
   /* ── RESPONSIVE BANNER ── */
   @media (min-width: 1200px) {
-    .banner { height: 320px; object-position: center 28%; }
+    .banner { height: 300px; background-position: center 30%; }
   }
   @media (max-width: 1199px) and (min-width: 769px) {
-    .banner { height: 260px; object-position: center 30%; }
+    .banner { height: 240px; background-position: center 35%; }
   }
   @media (max-width: 900px) and (orientation: landscape) {
-    .banner { height: 160px; object-position: center 20%; }
+    .banner { height: 140px; background-position: center 25%; }
   }
   @media (max-width: 768px) and (orientation: portrait) {
-    .banner { height: 200px; object-position: center 25%; }
+    .banner { height: 180px; background-position: center 30%; }
   }
 
   /* ── INTRO ── */
@@ -383,7 +385,7 @@
 </head>
 <body>
 
-<img class="banner" src="REFLECT_REFRESH_Post-Journey_Survey_COVER.png" alt="Post-Journey Survey">
+<div class="banner" role="img" aria-label="Post-Journey Survey"></div>
 
 <div class="intro">
   <div class="intro-title">Post-Journey Survey</div>
