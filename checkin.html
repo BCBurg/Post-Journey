@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>REFLECT | REFRESH — Post-Journey Check-In</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0d0d0d;
+    --gold: #f0bc2e;
+    --gold-dim: #7a6018;
+    --gold-faint: rgba(240,188,46,0.15);
+    --white: #ffffff;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--black);
+    overflow: hidden;
+    font-family: 'Cinzel', serif;
+  }
+
+  .screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .screen.active { opacity: 1; pointer-events: all; }
+
+  /* ── BANNER ── */
+  .banner {
+    flex-shrink: 0;
+    width: 100%;
+    height: 28vh;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+  }
+
+  /* ── SCREEN BODY ── */
+  .screen-body {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    overflow: hidden;
+  }
+
+  /* ── HOME ── */
+  .home-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+    border-right: 1px solid var(--gold-faint);
+    gap: 1.25rem;
+  }
+
+  .home-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.12em;
+    text-align: center;
+  }
+
+  .home-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+    gap: 1.25rem;
+  }
+
+  .home-right-label {
+    font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+    letter-spacing: 0.25em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .btn {
+    width: 100%; max-width: 340px;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 1.3rem 2rem;
+    border: 2px solid var(--gold);
+    background: transparent;
+    color: var(--white);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-transform: uppercase;
+  }
+  .btn:hover { background: var(--gold); color: var(--black); }
+  .btn-secondary { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); color: var(--white); border-color: var(--white); }
+
+  /* ── RULES SCREEN ── */
+  .rules-header {
+    flex: 0 0 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 2rem;
+    border-right: 1px solid var(--gold-faint);
+    gap: 1.25rem;
+  }
+
+  .rules-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1.4;
+    letter-spacing: 0.1em;
+  }
+
+  .rules-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+  }
+
+  .rules-divider { width: 40px; height: 1px; background: rgba(240,188,46,0.3); }
+
+  .rules-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .rules-body::-webkit-scrollbar { width: 4px; }
+  .rules-body::-webkit-scrollbar-track { background: transparent; }
+  .rules-body::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+  .rule-item {
+    display: flex;
+    gap: 1.4rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    align-items: flex-start;
+  }
+  .rule-item:last-of-type { border-bottom: none; }
+
+  .rule-number {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 2rem;
+    padding-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .rule-content { flex: 1; }
+
+  .rule-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 1.55vw, 1.1rem);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.07em;
+    margin-bottom: 0.3rem;
+  }
+
+  .rule-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 1.85vw, 1.35rem);
+    color: rgba(255,255,255,0.75);
+    line-height: 1.65;
+  }
+
+  .rules-closing {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--gold-faint);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  .rules-closing strong {
+    display: block;
+    font-style: normal;
+    color: var(--gold);
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    letter-spacing: 0.1em;
+    margin-top: 0.5rem;
+  }
+
+  /* ── CARD SCREENS ── */
+  .card-panel {
+    flex: 1 1 62%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    cursor: pointer;
+    min-width: 0;
+  }
+
+  .card-img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto; height: auto;
+    aspect-ratio: 2 / 3.5;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(240,188,46,0.2);
+    transition: box-shadow 0.2s ease;
+    display: block;
+  }
+
+  .card-panel:hover .card-img {
+    box-shadow: 0 12px 50px rgba(0,0,0,0.85), 0 0 0 2px rgba(240,188,46,0.45), 0 0 60px rgba(240,188,46,0.12);
+  }
+
+  .card-controls {
+    flex: 0 0 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 2.25rem;
+    border-left: 1px solid var(--gold-faint);
+    gap: 1.1rem;
+  }
+
+  .ctrl-label {
+    font-size: clamp(0.82rem, 1.4vw, 1rem);
+    letter-spacing: 0.28em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.15rem;
+  }
+
+  .ctrl-hint {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  .ctrl-hint em { color: var(--gold); font-style: normal; font-weight: 600; }
+
+  .ctrl-divider { width: 40px; height: 1px; background: rgba(240,188,46,0.3); }
+
+  .ctrl-btn {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--white);
+    background: none;
+    border: 2px solid rgba(255,255,255,0.25);
+    cursor: pointer;
+    padding: 0.9rem 1.2rem;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  .ctrl-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .ctrl-btn-gold { border-color: var(--gold); color: var(--gold); }
+  .ctrl-btn-gold:hover { background: var(--gold); color: var(--black); }
+  .ctrl-btn-rules { border-color: rgba(240,188,46,0.35); color: rgba(240,188,46,0.75); }
+  .ctrl-btn-rules:hover { border-color: var(--gold); color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="screen active" id="screen-home">
+  <img class="banner" src="REFLECT_REFRESH_Post-Journey_Check-In_Cover.png" alt="Post-Journey Check-In">
+  <div class="screen-body">
+    <div class="home-left">
+      <div class="home-tagline">A continuing conversation<br>for your marriage journey.</div>
+    </div>
+    <div class="home-right">
+      <div class="home-right-label">Where would you like to begin?</div>
+      <button class="btn" onclick="goRules(null)">How to Use These Cards</button>
+      <button class="btn btn-secondary" onclick="goCheckIn()">Check-In</button>
+    </div>
+  </div>
+</div>
+
+<!-- RULES -->
+<div class="screen" id="screen-rules">
+  <img class="banner" src="REFLECT_REFRESH_Post-Journey_Check-In_Cover.png" alt="Post-Journey Check-In">
+  <div class="screen-body">
+    <div class="rules-header">
+      <div class="rules-title">Before You Begin</div>
+      <div class="rules-subtitle">Eight principles for a meaningful check-in.</div>
+      <div class="rules-divider"></div>
+      <button class="ctrl-btn ctrl-btn-gold" id="rules-back-btn" onclick="rulesBack()">← Back</button>
+      <button class="ctrl-btn" onclick="goHome()">← Home</button>
+    </div>
+    <div class="rules-body">
+      <div class="rule-item">
+        <div class="rule-number">1</div>
+        <div class="rule-content">
+          <div class="rule-title">Reject the Fool's Choice</div>
+          <div class="rule-text">You don't have to choose between honesty and kindness. Sit with each question long enough to find an answer that is both true and generous.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-number">2</div>
+        <div class="rule-content">
+          <div class="rule-title">Go Slowly</div>
+          <div class="rule-text">Resist the pull to fill silence. The most powerful moments in this check-in will come after a pause, not before one.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-number">3</div>
+        <div class="rule-content">
+          <div class="rule-title">Alternate</div>
+          <div class="rule-text">One question. One voice at a time. Let your spouse answer before you respond. This is a conversation between equals, not a debrief.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-number">4</div>
+        <div class="rule-content">
+          <div class="rule-title">Listen to Understand</div>
+          <div class="rule-text">While your spouse is speaking, your only job is to receive. Reflect back what you heard before you offer your own perspective.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-number">5</div>
+        <div class="rule-content">
+          <div class="rule-title">This Is a Marathon</div>
+          <div class="rule-text">Two to four cards done well is a great check-in. Don't measure success by how much ground you covered. The best work is unhurried.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-number">6</div>
+        <div class="rule-content">
+          <div class="rule-title">It's OK to Skip</div>
+          <div class="rule-text">If a card doesn't reflect where you are right now, or you're not ready to go there yet, set it aside. We caution against avoidance, but we trust your discernment.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-number">7</div>
+        <div class="rule-content">
+          <div class="rule-title">Stay Humble</div>
+          <div class="rule-text">You may not see in yourself what your spouse sees. And you may not be able to fix what ails you alone. Licensed Christian counselors exist for exactly that moment. Don't be afraid to reach out.</div>
+        </div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-number">8</div>
+        <div class="rule-content">
+          <div class="rule-title">Pray First</div>
+          <div class="rule-text">We can always do more than pray, but we can never do less. Any life your marriage receives will ultimately come from Him. "In Him we live and move and have our being." (Acts 17:28)</div>
+        </div>
+      </div>
+      <div class="rules-closing">
+        "Therefore what God has joined together, let man not separate."
+        <strong>Mark 10:9</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECK-IN — Title Card (odd) -->
+<div class="screen" id="screen-checkin-title">
+  <img class="banner" src="REFLECT_REFRESH_Post-Journey_Check-In_Cover.png" alt="Post-Journey Check-In">
+  <div class="screen-body">
+    <div class="card-panel" onclick="revealPrompt()">
+      <img class="card-img" id="checkin-title-img" src="" alt="Session Title Card">
+    </div>
+    <div class="card-controls">
+      <div>
+        <div class="ctrl-label">Your Session</div>
+        <div class="ctrl-hint">Tap the card to reveal your <em>prompt</em></div>
+      </div>
+      <div class="ctrl-divider"></div>
+      <button class="ctrl-btn ctrl-btn-gold" onclick="revealPrompt()">See Prompt →</button>
+      <button class="ctrl-btn" onclick="goCheckIn()">New Card</button>
+      <button class="ctrl-btn ctrl-btn-rules" onclick="goRules('screen-checkin-title')">Rules</button>
+      <button class="ctrl-btn" onclick="goHome()">← Home</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECK-IN — Prompt Card (even) -->
+<div class="screen" id="screen-checkin-prompt">
+  <img class="banner" src="REFLECT_REFRESH_Post-Journey_Check-In_Cover.png" alt="Post-Journey Check-In">
+  <div class="screen-body">
+    <div class="card-panel">
+      <img class="card-img" id="checkin-prompt-img" src="" alt="Check-In Prompt Card">
+    </div>
+    <div class="card-controls">
+      <div>
+        <div class="ctrl-label">Spend Time Here</div>
+        <div class="ctrl-hint">Take your time with this prompt together.</div>
+      </div>
+      <div class="ctrl-divider"></div>
+      <button class="ctrl-btn ctrl-btn-gold" onclick="goCheckIn()">New Card</button>
+      <button class="ctrl-btn ctrl-btn-rules" onclick="goRules('screen-checkin-prompt')">Rules</button>
+      <button class="ctrl-btn" onclick="goHome()">← Home</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─────────────────────────────────────────────────────
+  // TO ADD MORE CARDS:
+  //   1. Name them sequentially: 43.png (odd = title),
+  //      44.png (even = prompt), 45.png, 46.png, etc.
+  //   2. Drop them in this same folder as checkin.html.
+  //   3. Update LAST_ODD_CARD to your new highest odd number.
+  // ─────────────────────────────────────────────────────
+  const LAST_ODD_CARD = 41; // ← update this to add cards
+
+  const pairs = [];
+  for (let odd = 1; odd <= LAST_ODD_CARD; odd += 2) {
+    pairs.push({ title: odd, prompt: odd + 1 });
+  }
+
+  let rulesReturnScreen = null;
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function goHome() {
+    rulesReturnScreen = null;
+    showScreen('screen-home');
+  }
+
+  function goRules(returnTo) {
+    rulesReturnScreen = returnTo;
+    document.getElementById('rules-back-btn').style.display = returnTo ? 'block' : 'none';
+    showScreen('screen-rules');
+  }
+
+  function rulesBack() {
+    if (rulesReturnScreen) {
+      showScreen(rulesReturnScreen);
+      rulesReturnScreen = null;
+    } else {
+      goHome();
+    }
+  }
+
+  function revealPrompt() { showScreen('screen-checkin-prompt'); }
+
+  function goCheckIn() {
+    const pair = pairs[Math.floor(Math.random() * pairs.length)];
+    document.getElementById('checkin-title-img').src  = pair.title  + '.png';
+    document.getElementById('checkin-prompt-img').src = pair.prompt + '.png';
+    showScreen('screen-checkin-title');
+  }
+
+  document.getElementById('rules-back-btn').style.display = 'none';
+</script>
+</body>
+</html>
