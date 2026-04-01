@@ -67,15 +67,19 @@
     overflow: hidden;
   }
 
-  @media (max-width: 768px) {
-    .hub-body { flex-direction: column; overflow-y: auto; }
-    .hub-left { border-right: none; border-bottom: 1px solid var(--gold-faint); padding: 1.5rem 1.5rem; }
-    .hub-right { flex: none; }
-    .choice-card { padding: 1.5rem; }
+  /* Mobile — stack vertically, make scrollable */
+  @media (max-width: 900px) {
+    .page { overflow-y: auto; height: auto; min-height: 100%; }
+    .hub-body { flex-direction: column; overflow: visible; flex: none; }
+    .hub-left { border-right: none; border-bottom: 1px solid var(--gold-faint); padding: 1.5rem; flex: none; }
+    .hub-right { flex: none; overflow: visible; }
+    .choice-card { padding: 1.5rem; flex: none; min-height: 120px; }
+    .banner { height: 20vh; }
   }
   @media (max-width: 900px) and (orientation: landscape) {
     .hub-left { padding: 1rem 1.5rem; gap: 0.75rem; }
     .choice-card { padding: 1rem 1.5rem; }
+    .banner { height: 15vh; }
   }
 
   /* ── LEFT — intro ── */
@@ -220,10 +224,13 @@
   .nav-link:hover { color: var(--gold); }
   .nav-link-gold { color: var(--gold) !important; }
   @media (max-width: 680px) {
-    .site-nav { padding: 0.75rem 1.25rem; }
-    .nav-logo { height: 32px; }
-    .nav-links { gap: 1rem; }
-    .nav-link { font-size: 0.68rem; letter-spacing: 0.1em; }
+    .site-nav { padding: 0.75rem 1rem; }
+    .nav-logo { height: 30px; }
+    .nav-links { gap: 0.75rem; }
+    .nav-link { font-size: 0.6rem; letter-spacing: 0.06em; white-space: nowrap; }
+  }
+  @media (max-width: 400px) {
+    .nav-link-hide-sm { display: none; }
   }
   /* Push page content below fixed nav */
   .page { padding-top: 64px; }
@@ -237,7 +244,7 @@
   <img class="nav-logo" src="../REFLECT_REFRESH_Brand_White.png" alt="Reflect Refresh">
   <div class="nav-links">
     <a class="nav-link" href="../">Home</a>
-    <a class="nav-link" href="../#about">About</a>
+    <a class="nav-link nav-link-hide-sm" href="../#about">About</a>
     <a class="nav-link" href="../#contact">Book Us</a>
     <a class="nav-link nav-link-gold" href="./">Post-Journey</a>
   </div>
