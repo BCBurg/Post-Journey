@@ -37,9 +37,23 @@
   .banner {
     width: 100%;
     display: block;
-    max-height: 320px;
+    height: 280px;
     object-fit: cover;
     object-position: center 30%;
+  }
+
+  /* ── RESPONSIVE BANNER ── */
+  @media (min-width: 1200px) {
+    .banner { height: 320px; object-position: center 28%; }
+  }
+  @media (max-width: 1199px) and (min-width: 769px) {
+    .banner { height: 260px; object-position: center 30%; }
+  }
+  @media (max-width: 900px) and (orientation: landscape) {
+    .banner { height: 160px; object-position: center 20%; }
+  }
+  @media (max-width: 768px) and (orientation: portrait) {
+    .banner { height: 200px; object-position: center 25%; }
   }
 
   /* ── INTRO ── */
@@ -383,7 +397,7 @@
      form, and paste your form ID here.
      Example: https://formspree.io/f/abcd1234
 ════════════════════════════════════════════ -->
-<form class="survey-form" id="survey-form" action="https://formspree.io/f/mbdpynpj" method="POST">
+<form class="survey-form" id="survey-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
 
   <!-- Q1 — Overall Rating -->
   <div class="q-block">
