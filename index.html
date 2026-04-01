@@ -37,6 +37,8 @@
     background: rgba(10,10,10,0.97);
     border-bottom: 1px solid var(--gold-faint);
   }
+  .nav-logo { display: block; text-decoration: none; }
+  a:has(.nav-logo) { display: flex; align-items: center; }
   .nav-logo { height: 40px; width: auto; flex-shrink: 0; }
   .nav-links { display: flex; gap: 2.25rem; align-items: center; flex-wrap: nowrap; }
   .nav-link {
@@ -54,7 +56,9 @@
 
   @media (max-width: 600px) {
     .site-nav { padding: 0.75rem 1rem; }
-    .nav-logo { height: 30px; }
+    .nav-logo { display: block; text-decoration: none; }
+  a:has(.nav-logo) { display: flex; align-items: center; }
+  .nav-logo { height: 30px; }
     .nav-links { gap: 0.85rem; }
     .nav-link { font-size: 0.6rem; letter-spacing: 0.06em; }
     .nav-hide-mobile { display: none; }
@@ -204,7 +208,7 @@
 
 <!-- NAV -->
 <nav class="site-nav">
-  <img class="nav-logo" src="../REFLECT_REFRESH_Brand_White.png" alt="Reflect Refresh">
+  <a href="https://reflectrefresh.org"><img class="nav-logo" src="../REFLECT_REFRESH_Brand_White.png" alt="Reflect Refresh"></a>
   <div class="nav-links">
     <a class="nav-link" href="../">Home</a>
     <a class="nav-link nav-hide-mobile" href="../#about">About</a>
