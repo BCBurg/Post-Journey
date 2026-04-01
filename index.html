@@ -193,9 +193,55 @@
   }
 
   .choice-card:hover .choice-arrow { color: var(--gold); transform: translateX(6px); }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 2.5rem;
+    background: rgba(10,10,10,0.97);
+    border-bottom: 1px solid rgba(240,188,46,0.15);
+  }
+  .nav-logo { height: 40px; width: auto; }
+  .nav-links { display: flex; gap: 2.25rem; align-items: center; }
+  .nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.78rem, 1.3vw, 0.95rem);
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--gold); }
+  .nav-link-gold { color: var(--gold) !important; }
+  @media (max-width: 680px) {
+    .site-nav { padding: 0.75rem 1.25rem; }
+    .nav-logo { height: 32px; }
+    .nav-links { gap: 1rem; }
+    .nav-link { font-size: 0.68rem; letter-spacing: 0.1em; }
+  }
+  /* Push page content below fixed nav */
+  .page { padding-top: 64px; }
+  @media (max-width: 680px) { .page { padding-top: 54px; } }
 </style>
 </head>
 <body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <img class="nav-logo" src="../REFLECT_REFRESH_Brand_White.png" alt="Reflect Refresh">
+  <div class="nav-links">
+    <a class="nav-link" href="../">Home</a>
+    <a class="nav-link" href="../#about">About</a>
+    <a class="nav-link" href="../#contact">Book Us</a>
+    <a class="nav-link nav-link-gold" href="./">Post-Journey</a>
+  </div>
+</nav>
 
 <div class="page">
   <div class="banner" role="img" aria-label="Post-Journey"></div>
@@ -206,7 +252,6 @@
       <div class="gold-rule"></div>
       <div class="hub-title">Your Post-Journey <span>Resources</span></div>
       <div class="hub-text">The retreat was the beginning, not the end. These tools are designed to help you keep the conversation going — at your own pace, in your own home.</div>
-      <a class="back-link" href="/">← Back to reflectrefresh.org</a>
     </div>
 
     <div class="hub-right">
