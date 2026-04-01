@@ -423,6 +423,14 @@
 </style>
 </head>
 <body>
+<script>
+(function() {
+  try {
+    var token = JSON.parse(localStorage.getItem('rr_pj_access'));
+    if (!token || Date.now() > token.expires) { window.location.replace('index.html'); }
+  } catch(e) { window.location.replace('index.html'); }
+})();
+</script>
 
 <!-- NAV -->
 <nav class="site-nav">

@@ -3,259 +3,343 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>REFLECT | REFRESH — Post-Journey</title>
+<title>REFLECT | REFRESH — Post-Journey Access</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --black: #0d0d0d;
     --gold: #f0bc2e;
     --gold-dim: #7a6018;
     --gold-faint: rgba(240,188,46,0.15);
     --white: #ffffff;
-    --text-body: rgba(255,255,255,0.82);
     --text-muted: rgba(255,255,255,0.5);
     --border: rgba(255,255,255,0.1);
+    --red: #e05555;
+    --green: #4caf7d;
   }
-
   html, body {
+    height: 100%;
     background: var(--black);
     color: var(--white);
     font-family: 'Cinzel', serif;
   }
-
-  /* ── NAV ── */
-  .site-nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 200;
+  body {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 0.85rem 2.5rem;
-    background: rgba(10,10,10,0.97);
-    border-bottom: 1px solid var(--gold-faint);
-  }
-  .nav-logo { display: block; text-decoration: none; }
-  a:has(.nav-logo) { display: flex; align-items: center; }
-  .nav-logo { height: 40px; width: auto; flex-shrink: 0; }
-  .nav-links { display: flex; gap: 2.25rem; align-items: center; flex-wrap: nowrap; }
-  .nav-link {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(0.78rem, 1.3vw, 0.95rem);
-    letter-spacing: 0.18em;
-    color: rgba(255,255,255,0.8);
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: color 0.2s;
-    white-space: nowrap;
-  }
-  .nav-link:hover { color: var(--gold); }
-  .nav-link-gold { color: var(--gold) !important; }
-
-  @media (max-width: 600px) {
-    .site-nav { padding: 0.75rem 1rem; }
-    .nav-logo { display: block; text-decoration: none; }
-  a:has(.nav-logo) { display: flex; align-items: center; }
-  .nav-logo { height: 30px; }
-    .nav-links { gap: 0.85rem; }
-    .nav-link { font-size: 0.6rem; letter-spacing: 0.06em; }
-    .nav-hide-mobile { display: none; }
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
   }
 
-  /* ── BANNER ── */
-  .banner {
+  .gate-box {
     width: 100%;
-    height: 28vh;
-    background-image: url('2026_Marriage_Seminar_PostJourney.png');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    margin-top: 64px;
-  }
-  @media (max-width: 600px) {
-    .banner { height: 22vh; margin-top: 54px; }
-  }
-  @media (max-width: 900px) and (orientation: landscape) {
-    .banner { height: 18vh; }
-  }
-
-  /* ── MAIN LAYOUT ── */
-  .hub-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 60vh;
-  }
-
-  @media (max-width: 860px) {
-    .hub-wrap { grid-template-columns: 1fr; }
-  }
-
-  /* ── LEFT PANEL ── */
-  .hub-left {
-    padding: 3rem;
-    border-right: 1px solid var(--gold-faint);
+    max-width: 480px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 1.25rem;
+    align-items: center;
+    gap: 1.75rem;
   }
 
-  @media (max-width: 860px) {
-    .hub-left {
-      padding: 2rem 1.5rem;
-      border-right: none;
-      border-bottom: 1px solid var(--gold-faint);
-    }
+  .gate-logo {
+    height: 56px;
+    width: auto;
   }
 
-  .hub-label {
-    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
-    letter-spacing: 0.35em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
+  .gold-rule {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
 
-  .gold-rule { width: 50px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); }
-
-  .hub-title {
+  .gate-title {
     font-family: 'Cinzel', serif;
-    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
     font-weight: 700;
     color: var(--white);
-    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  .gate-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.6;
+    margin-top: -0.75rem;
+  }
+
+  .gate-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .field-label {
+    font-size: clamp(0.7rem, 1.2vw, 0.82rem);
+    letter-spacing: 0.25em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .gate-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    letter-spacing: 0.12em;
+    padding: 1rem 1.25rem;
+    outline: none;
+    transition: border-color 0.2s;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .gate-input:focus { border-color: var(--gold); }
+  .gate-input::placeholder {
+    color: rgba(255,255,255,0.2);
     letter-spacing: 0.05em;
-  }
-  .hub-title span { color: var(--gold); }
-
-  .hub-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(1.05rem, 1.9vw, 1.3rem);
-    color: var(--text-muted);
-    line-height: 1.7;
+    text-transform: none;
   }
 
-  /* ── RIGHT PANEL — choice cards ── */
-  .hub-right {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .choice-card {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 2rem 2.5rem;
-    text-decoration: none;
-    border-bottom: 1px solid var(--gold-faint);
-    transition: background 0.25s ease;
-    gap: 0.6rem;
-    min-height: 120px;
-  }
-  .choice-card:last-child { border-bottom: none; }
-  .choice-card:hover { background: rgba(240,188,46,0.05); }
-
-  @media (max-width: 860px) {
-    .choice-card { padding: 1.5rem; min-height: 100px; }
-  }
-
-  .choice-number {
-    font-size: clamp(0.65rem, 1.1vw, 0.78rem);
-    letter-spacing: 0.35em;
-    color: var(--gold-dim);
-    text-transform: uppercase;
-  }
-
-  .choice-title {
+  .gate-btn {
     font-family: 'Cinzel', serif;
-    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-size: clamp(0.85rem, 1.6vw, 1rem);
     font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 1.1rem 2rem;
+    border: 2px solid var(--gold);
+    background: transparent;
     color: var(--white);
-    letter-spacing: 0.07em;
-    transition: color 0.2s;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-transform: uppercase;
+    width: 100%;
   }
-  .choice-card:hover .choice-title { color: var(--gold); }
+  .gate-btn:hover { background: var(--gold); color: var(--black); }
 
-  .choice-desc {
+  /* ── STATUS MESSAGES ── */
+  .gate-message {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    line-height: 1.6;
+    text-align: center;
+    display: none;
+  }
+  .gate-message.error {
+    border: 1px solid var(--red);
+    background: rgba(224,85,85,0.08);
+    color: rgba(255,255,255,0.85);
+  }
+  .gate-message.expired {
+    border: 1px solid var(--gold-dim);
+    background: rgba(240,188,46,0.06);
+    color: rgba(255,255,255,0.85);
+  }
+  .gate-message.success {
+    border: 1px solid var(--green);
+    background: rgba(76,175,125,0.08);
+    color: rgba(255,255,255,0.85);
+  }
+  .gate-message a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .gate-message a:hover { text-decoration: underline; }
+
+  .gate-footer {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: clamp(0.95rem, 1.7vw, 1.15rem);
-    color: var(--text-muted);
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    color: rgba(255,255,255,0.2);
+    text-align: center;
     line-height: 1.6;
   }
 
-  .choice-arrow {
-    font-size: clamp(1rem, 1.8vw, 1.2rem);
-    color: var(--gold-dim);
-    transition: color 0.2s, transform 0.2s;
-    display: inline-block;
-    margin-top: 0.25rem;
+  /* ── SHAKE ANIMATION for wrong code ── */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
   }
-  .choice-card:hover .choice-arrow { color: var(--gold); transform: translateX(6px); }
-
-  /* ── GOLD BOTTOM LINE ── */
-  .gold-bottom {
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--gold) 40%, var(--gold) 60%, transparent);
-  }
+  .shake { animation: shake 0.4s ease; }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="site-nav">
-  <a href="https://reflectrefresh.org"><img class="nav-logo" src="../REFLECT_REFRESH_Brand_White.png" alt="Reflect Refresh"></a>
-  <div class="nav-links">
-    <a class="nav-link" href="../">Home</a>
-    <a class="nav-link nav-hide-mobile" href="../#about">About</a>
-    <a class="nav-link" href="../#contact">Book Us</a>
-    <a class="nav-link nav-link-gold" href="./">Post-Journey</a>
-  </div>
-</nav>
+<div class="gate-box">
 
-<!-- BANNER -->
-<div class="banner"></div>
+  <a href="https://reflectrefresh.org">
+    <img class="gate-logo" src="../REFLECT_REFRESH_Brand_White.png" alt="Reflect Refresh">
+  </a>
 
-<!-- HUB -->
-<div class="hub-wrap">
+  <div class="gold-rule"></div>
 
-  <!-- Left: intro -->
-  <div class="hub-left">
-    <div class="hub-label">After the Retreat</div>
-    <div class="gold-rule"></div>
-    <div class="hub-title">Your Post-Journey <span>Resources</span></div>
-    <div class="hub-text">The retreat was the beginning, not the end. These tools are designed to help you keep the conversation going — at your own pace, in your own home.</div>
+  <div>
+    <div class="gate-title">Post-Journey Resources</div>
+    <div class="gate-subtitle" style="margin-top:0.75rem;">Enter the passcode provided by your facilitators<br>to access your post-retreat tools.</div>
   </div>
 
-  <!-- Right: choices -->
-  <div class="hub-right">
-    <a class="choice-card" href="checkin.html">
-      <div class="choice-number">01</div>
-      <div class="choice-title">Post-Journey Check-In</div>
-      <div class="choice-desc">Draw a card, sit with a prompt, and keep the conversation alive. A continuing practice for your marriage journey.</div>
-      <div class="choice-arrow">→</div>
-    </a>
-    <a class="choice-card" href="checkup.html">
-      <div class="choice-number">02</div>
-      <div class="choice-title">180-Day Commitment Check-Up</div>
-      <div class="choice-desc">Track and grade the commitments you made during the retreat across six check-ups over 180 days. Each spouse keeps their own record.</div>
-      <div class="choice-arrow">→</div>
-    </a>
-    <a class="choice-card" href="survey.html">
-      <div class="choice-number">03</div>
-      <div class="choice-title">Post-Journey Survey</div>
-      <div class="choice-desc">Share your honest feedback about the retreat experience. Your response helps us serve the next couple better.</div>
-      <div class="choice-arrow">→</div>
-    </a>
+  <div class="gate-form">
+    <div>
+      <label class="field-label" for="passcode">Cohort Passcode</label>
+      <input
+        class="gate-input"
+        id="passcode"
+        type="text"
+        placeholder="Enter your passcode"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="characters"
+        spellcheck="false"
+        onkeydown="if(event.key==='Enter') checkCode()"
+      >
+    </div>
+    <button class="gate-btn" onclick="checkCode()">Enter</button>
+  </div>
+
+  <div class="gate-message" id="gate-msg"></div>
+
+  <div class="gate-footer">
+    "Therefore what God has joined together,<br>let man not separate." — Mark 10:9
   </div>
 
 </div>
 
-<div class="gold-bottom"></div>
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// COHORT PASSCODE CONFIGURATION
+//
+// Each cohort entry has:
+//   hash    — SHA-256 hash of the passcode (UPPERCASE, no spaces)
+//   expires — date after which the code stops working (YYYY-MM-DD)
+//   label   — internal label for your reference (not shown to users)
+//
+// TO ADD A NEW COHORT:
+//   1. Go to: https://reflectrefresh.org/Post-Journey/hash-tool.html
+//   2. Enter the new passcode and copy the hash
+//   3. Add a new entry to the COHORTS array below
+//
+// TO EXPIRE A COHORT:
+//   Simply change the expires date to a past date, or remove the entry.
+// ═══════════════════════════════════════════════════════════════════
+const COHORTS = [
+  {
+    label:   'MS Baptist SAA — April 2026',
+    hash:    '75361592e5e0f5c13423acfa6a1989e73a35f3a7a838fa1f69cc4ec08a5cb9ea',
+    expires: '2026-10-01'
+  },
+  // ── ADD FUTURE COHORTS HERE ──
+  // {
+  //   label:   'Your Church Name — Month Year',
+  //   hash:    'paste-hash-from-hash-tool-here',
+  //   expires: 'YYYY-MM-DD'
+  // },
+];
 
+// ── ACCESS TOKEN ──
+const TOKEN_KEY  = 'rr_pj_access';
+const TOKEN_DAYS = 1; // Re-check daily so expired codes kick out promptly
+
+// ── CHECK IF ALREADY AUTHENTICATED ──
+function isAuthenticated() {
+  try {
+    const token = JSON.parse(localStorage.getItem(TOKEN_KEY));
+    if (!token) return false;
+    // Check token hasn't expired
+    if (Date.now() > token.expires) {
+      localStorage.removeItem(TOKEN_KEY);
+      return false;
+    }
+    // Re-validate the stored hash is still in an active cohort
+    const cohort = COHORTS.find(c => c.hash === token.hash);
+    if (!cohort) { localStorage.removeItem(TOKEN_KEY); return false; }
+    // Check cohort expiration
+    if (new Date() > new Date(cohort.expires)) {
+      localStorage.removeItem(TOKEN_KEY);
+      return false;
+    }
+    return true;
+  } catch(e) {
+    return false;
+  }
+}
+
+// ── HASH FUNCTION ──
+async function sha256(str) {
+  const data = new TextEncoder().encode(str.toUpperCase().trim());
+  const buf  = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(buf))
+    .map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// ── CHECK CODE ──
+async function checkCode() {
+  const input = document.getElementById('passcode').value.trim();
+  const msgEl = document.getElementById('gate-msg');
+
+  if (!input) {
+    showMessage('error', 'Please enter your cohort passcode.');
+    return;
+  }
+
+  const inputHash = await sha256(input);
+  const today     = new Date();
+
+  // Search cohorts
+  const match = COHORTS.find(c => c.hash === inputHash);
+
+  if (!match) {
+    // Wrong code
+    showMessage('error', 'That passcode wasn\'t recognized. Please check with your facilitators and try again.');
+    document.getElementById('passcode').classList.add('shake');
+    setTimeout(() => document.getElementById('passcode').classList.remove('shake'), 500);
+    return;
+  }
+
+  if (today > new Date(match.expires)) {
+    // Right code, but expired
+    showMessage('expired',
+      `Your Post-Journey access for this cohort expired on ${new Date(match.expires).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}.<br><br>
+      To inquire about continued access or upcoming retreats, contact Brian and Candi at
+      <a href="mailto:brianc@citylightvicksburg.org">brianc@citylightvicksburg.org</a>.`
+    );
+    return;
+  }
+
+  // Valid — store token and redirect
+  const token = {
+    hash:    match.hash,
+    expires: Date.now() + (TOKEN_DAYS * 24 * 60 * 60 * 1000)
+  };
+  localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+
+  showMessage('success', 'Access granted. Welcome back to your journey.');
+  setTimeout(() => { window.location.href = 'hub.html'; }, 1200);
+}
+
+// ── SHOW MESSAGE ──
+function showMessage(type, html) {
+  const el = document.getElementById('gate-msg');
+  el.className = 'gate-message ' + type;
+  el.innerHTML = html;
+  el.style.display = 'block';
+}
+
+// ── ON LOAD: skip gate if already authenticated ──
+if (isAuthenticated()) {
+  window.location.replace('hub.html');
+}
+</script>
 </body>
 </html>
