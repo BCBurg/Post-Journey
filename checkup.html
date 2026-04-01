@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REFLECT | REFRESH — 180-Day Check-Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0d0d0d;
+    --black-soft: #161616;
+    --gold: #f0bc2e;
+    --gold-dim: #7a6018;
+    --gold-faint: rgba(240,188,46,0.15);
+    --white: #ffffff;
+    --text-body: rgba(255,255,255,0.82);
+    --text-muted: rgba(255,255,255,0.5);
+    --border: rgba(255,255,255,0.1);
+    --green: #4caf7d;
+    --green-faint: rgba(76,175,125,0.15);
+    --amber: #f0a030;
+    --amber-faint: rgba(240,160,48,0.15);
+    --red: #e05555;
+    --red-faint: rgba(224,85,85,0.15);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Cinzel', serif;
+    overflow-x: hidden;
+    padding-top: 64px;
+  }
+
+  /* ── NAV ── */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 2.5rem;
+    background: rgba(10,10,10,0.97);
+    border-bottom: 1px solid var(--gold-faint);
+  }
+  .nav-logo { height: 40px; width: auto; }
+  .nav-links { display: flex; gap: 2.25rem; align-items: center; }
+  .nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.78rem, 1.3vw, 0.95rem);
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-link:hover { color: var(--gold); }
+  .nav-link-gold { color: var(--gold) !important; }
+  @media (max-width: 680px) {
+    .site-nav { padding: 0.75rem 1.25rem; }
+    .nav-logo { height: 32px; }
+    .nav-links { gap: 1rem; }
+    .nav-link { font-size: 0.68rem; }
+  }
+
+  /* ── BANNER ── */
+  .banner {
+    width: 100%;
+    height: 22vh;
+    background-image: url('2026_Marriage_Seminar_PostJourney.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  @media (max-width: 768px) { .banner { height: 18vh; } }
+  @media (max-width: 900px) and (orientation: landscape) { .banner { height: 14vh; } }
+
+  /* ── PAGE WRAPPER ── */
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+  }
+
+  /* ── SCREEN MANAGEMENT ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── SECTION HEADERS ── */
+  .page-label {
+    font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    letter-spacing: 0.35em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .gold-rule { width: 50px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin-bottom: 1.5rem; }
+  .page-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+  .page-title span { color: var(--gold); }
+  .page-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.9vw, 1.25rem);
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 2rem;
+  }
+
+  /* ── FORM ELEMENTS ── */
+  .field-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .field-label {
+    font-size: clamp(0.72rem, 1.2vw, 0.85rem);
+    letter-spacing: 0.22em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+  }
+  .field-input, .field-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    padding: 0.85rem 1.1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .field-input:focus, .field-textarea:focus { border-color: var(--gold); }
+  .field-input::placeholder, .field-textarea::placeholder { color: rgba(255,255,255,0.2); }
+  .field-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.82rem, 1.5vw, 0.98rem);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    padding: 1rem 2rem;
+    border: 2px solid var(--gold);
+    background: transparent;
+    color: var(--white);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn:hover { background: var(--gold); color: var(--black); }
+  .btn-ghost { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.75); }
+  .btn-ghost:hover { border-color: var(--white); color: var(--white); background: rgba(255,255,255,0.08); }
+  .btn-sm {
+    font-size: clamp(0.68rem, 1.1vw, 0.78rem);
+    padding: 0.55rem 1rem;
+    letter-spacing: 0.15em;
+  }
+  .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem; }
+
+  /* ── SESSION BLOCK ── */
+  .session-block {
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .session-header {
+    background: rgba(240,188,46,0.06);
+    border-bottom: 1px solid var(--gold-faint);
+    padding: 1.25rem 1.75rem;
+  }
+  .session-number {
+    font-size: clamp(0.65rem, 1.1vw, 0.78rem);
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .session-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.88rem, 1.6vw, 1.05rem);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.35rem;
+  }
+  .session-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(0.92rem, 1.6vw, 1.05rem);
+    color: var(--text-muted);
+  }
+  .session-body { padding: 1.5rem 1.75rem; }
+
+  /* ── COMMITMENT INPUT ROW ── */
+  .commitment-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .commitment-row input {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .commitment-row input:focus { border-color: var(--gold); }
+  .commitment-row input::placeholder { color: rgba(255,255,255,0.2); }
+  .remove-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    width: 32px; height: 32px;
+    font-size: 1.1rem;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .remove-btn:hover { border-color: var(--red); color: var(--red); }
+  .add-commitment-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    color: var(--gold-dim);
+    background: none;
+    border: 1px dashed rgba(240,188,46,0.25);
+    cursor: pointer;
+    padding: 0.6rem 1rem;
+    width: 100%;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    margin-top: 0.25rem;
+  }
+  .add-commitment-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── INTERVAL SELECTOR ── */
+  .interval-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 600px) { .interval-grid { grid-template-columns: repeat(3, 1fr); } }
+  .interval-btn {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.78rem, 1.3vw, 0.92rem);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.85rem 0.5rem;
+    border: 2px solid var(--border);
+    background: transparent;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .interval-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .interval-btn.selected { border-color: var(--gold); background: rgba(240,188,46,0.1); color: var(--gold); }
+  .interval-btn.completed { border-color: var(--green); color: var(--green); position: relative; }
+  .interval-btn.completed::after { content: '✓'; position: absolute; top: 2px; right: 5px; font-size: 0.6rem; }
+
+  /* ── GRADING CARD ── */
+  .grade-card {
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .grade-card.graded-green { border-color: var(--green); }
+  .grade-card.graded-amber { border-color: var(--amber); }
+  .grade-card.graded-red { border-color: var(--red); }
+
+  .grade-card-header {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid var(--border);
+  }
+  .grade-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.85vw, 1.25rem);
+    color: var(--white);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .grade-card-session {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  .grade-buttons {
+    display: flex;
+    gap: 0.6rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .grade-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-right: 0.5rem;
+  }
+  .grade-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.55rem 1.1rem;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .grade-btn-green { background: var(--green-faint); color: var(--green); border-color: transparent; }
+  .grade-btn-green:hover, .grade-btn-green.active { background: var(--green); color: var(--black); border-color: var(--green); }
+  .grade-btn-amber { background: var(--amber-faint); color: var(--amber); border-color: transparent; }
+  .grade-btn-amber:hover, .grade-btn-amber.active { background: var(--amber); color: var(--black); border-color: var(--amber); }
+  .grade-btn-red { background: var(--red-faint); color: var(--red); border-color: transparent; }
+  .grade-btn-red:hover, .grade-btn-red.active { background: var(--red); color: var(--white); border-color: var(--red); }
+
+  .grade-fields { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+  .grade-field-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .grade-field-label span { font-style: italic; color: rgba(255,255,255,0.3); text-transform: none; letter-spacing: 0; font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; margin-left: 0.5rem; }
+
+  /* ── HISTORY ── */
+  .history-empty {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    color: var(--text-muted);
+    padding: 2rem 0;
+  }
+  .history-entry {
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .history-entry-header {
+    background: rgba(240,188,46,0.06);
+    border-bottom: 1px solid var(--gold-faint);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .history-entry-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.88rem, 1.5vw, 1.05rem);
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .history-entry-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+    color: var(--text-muted);
+  }
+  .history-entry-body { padding: 1.5rem; display: none; }
+  .history-entry-body.open { display: block; }
+  .history-commitment {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .history-commitment:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .history-commitment-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 1.85vw, 1.2rem);
+    color: var(--white);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .grade-pill {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    border-radius: 2px;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .grade-pill-green { background: var(--green-faint); color: var(--green); }
+  .grade-pill-amber { background: var(--amber-faint); color: var(--amber); }
+  .grade-pill-red { background: var(--red-faint); color: var(--red); }
+  .history-field-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    margin-top: 0.75rem;
+  }
+  .history-field-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 1.7vw, 1.15rem);
+    color: var(--text-body);
+    line-height: 1.65;
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    body { background: white; color: black; padding-top: 0; font-family: Georgia, serif; }
+    .site-nav, .banner, .btn-group, .btn, .no-print { display: none !important; }
+    .page-wrap { max-width: 100%; padding: 0; }
+    .print-header { display: block !important; }
+    .history-entry-body { display: block !important; }
+    .grade-card { border: 1px solid #ccc; page-break-inside: avoid; }
+    .grade-pill-green { color: #2e7d52; border: 1px solid #2e7d52; }
+    .grade-pill-amber { color: #b57a00; border: 1px solid #b57a00; }
+    .grade-pill-red { color: #c0392b; border: 1px solid #c0392b; }
+    * { color: inherit !important; background: transparent !important; border-color: #ccc !important; }
+    .gold-rule { background: #999 !important; }
+  }
+  .print-header { display: none; }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex; align-items: center; gap: 1rem; margin: 2rem 0;
+  }
+  .section-divider span {
+    font-size: 0.7rem; letter-spacing: 0.3em; color: var(--gold-dim); text-transform: uppercase; white-space: nowrap;
+  }
+  .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--gold-faint); }
+
+  /* ── USER SWITCHER ── */
+  .user-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.85rem 1.5rem;
+    background: rgba(240,188,46,0.05);
+    border: 1px solid var(--gold-faint);
+    margin-bottom: 2rem;
+  }
+  .user-bar-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 1.7vw, 1.15rem);
+    color: var(--white);
+  }
+  .user-bar-name span { color: var(--gold); font-style: italic; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <img class="nav-logo" src="../REFLECT_REFRESH_Brand_White.png" alt="Reflect Refresh">
+  <div class="nav-links">
+    <a class="nav-link" href="../">Home</a>
+    <a class="nav-link" href="../#about">About</a>
+    <a class="nav-link" href="../#contact">Book Us</a>
+    <a class="nav-link nav-link-gold" href="./">Post-Journey</a>
+  </div>
+</nav>
+
+<div class="banner"></div>
+
+<div class="page-wrap">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SCREEN: WELCOME / USER SELECT             -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="screen active" id="screen-welcome">
+    <div class="page-label">180-Day Check-Up</div>
+    <div class="gold-rule"></div>
+    <div class="page-title">Your Marriage <span>Commitment Tracker</span></div>
+    <p class="page-text">Track the commitments you made during the retreat across six check-ups over 180 days. Each spouse maintains their own record. Your progress is saved on this device.</p>
+
+    <div id="user-list"></div>
+
+    <div class="section-divider no-print"><span>Start Here</span></div>
+
+    <div class="field-group">
+      <label class="field-label" for="new-user-name">Enter Your First Name to Begin</label>
+      <input class="field-input" id="new-user-name" type="text" placeholder="Your first name" maxlength="40">
+    </div>
+    <div class="btn-group">
+      <button class="btn" onclick="createUser()">Begin My Check-Up Journey</button>
+    </div>
+
+    <div class="section-divider no-print"><span>Transferring from Another Device?</span></div>
+    <p class="page-text" style="margin-bottom:1.25rem;">If you've used this tool on another device, import your backup file to restore your full history here.</p>
+    <div class="btn-group">
+      <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()">Import Backup File</button>
+      <input type="file" id="import-file" accept=".json,.txt" style="display:none" onchange="importData(this)">
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SCREEN: SETUP COMMITMENTS                 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="screen" id="screen-setup">
+    <div class="user-bar">
+      <div class="user-bar-name">Setting up commitments for <span id="setup-user-name"></span></div>
+      <button class="btn btn-sm btn-ghost no-print" onclick="goHome()">← Back</button>
+    </div>
+
+    <div class="page-label">Step 1 of 1</div>
+    <div class="gold-rule"></div>
+    <div class="page-title">Enter Your <span>Commitments</span></div>
+    <p class="page-text">Open your workbook to the Post-Commitment pages and enter what you wrote. Add as many lines as you need for each session.</p>
+
+    <!-- Session 1 -->
+    <div class="session-block">
+      <div class="session-header">
+        <div class="session-number">Session 1</div>
+        <div class="session-title">Communication — Life and Death</div>
+        <div class="session-verse">"Death and life are in the power of the tongue..." — Proverbs 18:21</div>
+      </div>
+      <div class="session-body">
+        <div class="field-label" style="margin-bottom:0.75rem;">I will strengthen our marriage by...</div>
+        <div id="commitments-s1"></div>
+        <button class="add-commitment-btn" onclick="addCommitmentRow('s1')">+ Add a Commitment</button>
+      </div>
+    </div>
+
+    <!-- Session 2 -->
+    <div class="session-block">
+      <div class="session-header">
+        <div class="session-number">Session 2</div>
+        <div class="session-title">Communication — Telling New Stories</div>
+        <div class="session-verse">"A person has joy in an apt answer, and how delightful is a timely word!" — Proverbs 15:23</div>
+      </div>
+      <div class="session-body">
+        <div class="field-label" style="margin-bottom:0.75rem;">I will commit to strengthen our marriage by...</div>
+        <div id="commitments-s2"></div>
+        <button class="add-commitment-btn" onclick="addCommitmentRow('s2')">+ Add a Commitment</button>
+      </div>
+    </div>
+
+    <!-- Session 3 -->
+    <div class="session-block">
+      <div class="session-header">
+        <div class="session-number">Session 3</div>
+        <div class="session-title">Connection — Flesh of My Flesh</div>
+        <div class="session-verse">"It is not good that the man should be alone..." — Genesis 2:18</div>
+      </div>
+      <div class="session-body">
+        <div class="field-label" style="margin-bottom:0.75rem;">I will commit to strengthen our marriage by...</div>
+        <div id="commitments-s3"></div>
+        <button class="add-commitment-btn" onclick="addCommitmentRow('s3')">+ Add a Commitment</button>
+      </div>
+    </div>
+
+    <!-- Session 4 -->
+    <div class="session-block">
+      <div class="session-header">
+        <div class="session-number">Session 4</div>
+        <div class="session-title">Connection — Take Up Your Cross</div>
+        <div class="session-verse">"If anyone would come after me, let him deny himself..." — Matthew 16:24</div>
+      </div>
+      <div class="session-body">
+        <div class="field-label" style="margin-bottom:0.75rem;">I will commit to strengthen our marriage by...</div>
+        <div id="commitments-s4"></div>
+        <button class="add-commitment-btn" onclick="addCommitmentRow('s4')">+ Add a Commitment</button>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn" onclick="saveCommitments()">Save My Commitments</button>
+      <button class="btn btn-ghost" onclick="goHome()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SCREEN: DASHBOARD                         -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="screen" id="screen-dashboard">
+    <div class="user-bar">
+      <div class="user-bar-name">Welcome back, <span id="dashboard-user-name"></span></div>
+      <button class="btn btn-sm btn-ghost no-print" onclick="goHome()">Switch User</button>
+    </div>
+
+    <div class="page-label">Your Progress</div>
+    <div class="gold-rule"></div>
+    <div class="page-title">180-Day <span>Journey</span></div>
+
+    <div class="interval-grid" id="interval-grid"></div>
+
+    <div class="btn-group">
+      <button class="btn" id="start-checkup-btn" onclick="startCheckup()">Begin Next Check-Up</button>
+      <button class="btn btn-ghost" onclick="showHistory()">View My History</button>
+      <button class="btn btn-ghost no-print" onclick="editCommitments()">Edit Commitments</button>
+      <button class="btn btn-ghost no-print" onclick="exportBackup()">Backup / Transfer</button>
+      <button class="btn btn-ghost no-print" onclick="exportReadable()">Export Readable</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SCREEN: CHECK-UP FORM                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="screen" id="screen-checkup">
+    <div class="user-bar">
+      <div class="user-bar-name"><span id="checkup-user-name"></span> — <span id="checkup-interval-label" style="color:var(--gold);font-style:italic;"></span> Check-Up</div>
+      <button class="btn btn-sm btn-ghost no-print" onclick="showDashboard()">← Back</button>
+    </div>
+
+    <div class="page-label">Check-Up</div>
+    <div class="gold-rule"></div>
+    <div class="page-title">Grade Your <span>Progress</span></div>
+    <p class="page-text">For each commitment, choose a grade — then share what went well and where you need to grow.</p>
+
+    <div id="checkup-cards"></div>
+
+    <div class="btn-group no-print">
+      <button class="btn" onclick="saveCheckup()">Save This Check-Up</button>
+      <button class="btn btn-ghost" onclick="showDashboard()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SCREEN: HISTORY                           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="screen" id="screen-history">
+    <div class="user-bar">
+      <div class="user-bar-name"><span id="history-user-name"></span>'s Check-Up History</div>
+      <button class="btn btn-sm btn-ghost no-print" onclick="showDashboard()">← Back</button>
+    </div>
+
+    <div class="page-label">Full History</div>
+    <div class="gold-rule"></div>
+    <div class="page-title">Your <span>Journey So Far</span></div>
+
+    <div id="history-list"></div>
+
+    <div class="btn-group no-print">
+      <button class="btn btn-ghost" onclick="window.print()">Print This Page</button>
+      <button class="btn btn-ghost" onclick="exportReadable()">Export Readable</button>
+      <button class="btn btn-ghost" onclick="exportBackup()">Backup / Transfer</button>
+      <button class="btn btn-ghost" onclick="showDashboard()">← Dashboard</button>
+    </div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<script>
+// ═══════════════════════════════════════════════════════
+// DATA MODEL
+// localStorage keys:
+//   rr_users         — array of user names
+//   rr_data_{name}   — { name, commitments: {s1,s2,s3,s4}, checkups: [{interval,date,grades}] }
+// ═══════════════════════════════════════════════════════
+
+const SESSIONS = [
+  { key: 's1', number: 'Session 1', title: 'Communication — Life and Death',    verse: 'Proverbs 18:21',  stem: 'I will strengthen our marriage by...' },
+  { key: 's2', number: 'Session 2', title: 'Communication — Telling New Stories', verse: 'Proverbs 15:23', stem: 'I will commit to strengthen our marriage by...' },
+  { key: 's3', number: 'Session 3', title: 'Connection — Flesh of My Flesh',    verse: 'Genesis 2:18',   stem: 'I will commit to strengthen our marriage by...' },
+  { key: 's4', number: 'Session 4', title: 'Connection — Take Up Your Cross',   verse: 'Matthew 16:24',  stem: 'I will commit to strengthen our marriage by...' },
+];
+const INTERVALS = [30, 60, 90, 120, 150, 180];
+
+let currentUser = null;
+
+// ── STORAGE HELPERS ──
+function getUsers() {
+  return JSON.parse(localStorage.getItem('rr_users') || '[]');
+}
+function saveUsers(arr) {
+  localStorage.setItem('rr_users', JSON.stringify(arr));
+}
+function getUserData(name) {
+  return JSON.parse(localStorage.getItem('rr_data_' + name) || 'null');
+}
+function saveUserData(data) {
+  localStorage.setItem('rr_data_' + data.name, JSON.stringify(data));
+}
+
+// ── SCREEN MANAGEMENT ──
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── WELCOME SCREEN ──
+function goHome() {
+  currentUser = null;
+  renderUserList();
+  showScreen('screen-welcome');
+}
+
+function renderUserList() {
+  const users = getUsers();
+  const el = document.getElementById('user-list');
+  if (!users.length) { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <div class="section-divider no-print"><span>Returning User?</span></div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.5rem;">
+      ${users.map(u => `<button class="btn btn-ghost" onclick="selectUser('${u}')">${u}</button>`).join('')}
+    </div>`;
+}
+
+function selectUser(name) {
+  currentUser = getUserData(name);
+  if (!currentUser) return;
+  showDashboard();
+}
+
+function createUser() {
+  const name = document.getElementById('new-user-name').value.trim();
+  if (!name) { alert('Please enter your first name.'); return; }
+  const users = getUsers();
+  if (!users.includes(name)) { users.push(name); saveUsers(users); }
+  currentUser = getUserData(name) || { name, commitments: { s1: [], s2: [], s3: [], s4: [] }, checkups: [] };
+  saveUserData(currentUser);
+  showSetup();
+}
+
+// ── SETUP SCREEN ──
+function showSetup() {
+  document.getElementById('setup-user-name').textContent = currentUser.name;
+  SESSIONS.forEach(s => {
+    const container = document.getElementById('commitments-' + s.key);
+    container.innerHTML = '';
+    const existing = currentUser.commitments[s.key] || [];
+    if (existing.length === 0) {
+      addCommitmentRow(s.key, '');
+      addCommitmentRow(s.key, '');
+    } else {
+      existing.forEach(v => addCommitmentRow(s.key, v));
+    }
+  });
+  showScreen('screen-setup');
+}
+
+function editCommitments() { showSetup(); }
+
+function addCommitmentRow(sessionKey, value = '') {
+  const container = document.getElementById('commitments-' + sessionKey);
+  const row = document.createElement('div');
+  row.className = 'commitment-row';
+  row.innerHTML = `
+    <input type="text" placeholder="Write your commitment here..." value="${value.replace(/"/g,'&quot;')}">
+    <button class="remove-btn" onclick="this.parentElement.remove()" title="Remove">✕</button>`;
+  container.appendChild(row);
+}
+
+function saveCommitments() {
+  const allEmpty = SESSIONS.every(s => {
+    const rows = document.querySelectorAll('#commitments-' + s.key + ' input');
+    return [...rows].every(r => !r.value.trim());
+  });
+  if (allEmpty) { alert('Please enter at least one commitment before saving.'); return; }
+
+  SESSIONS.forEach(s => {
+    const rows = document.querySelectorAll('#commitments-' + s.key + ' input');
+    currentUser.commitments[s.key] = [...rows].map(r => r.value.trim()).filter(v => v);
+  });
+  saveUserData(currentUser);
+  showDashboard();
+}
+
+// ── DASHBOARD ──
+function showDashboard() {
+  document.getElementById('dashboard-user-name').textContent = currentUser.name;
+  const completedIntervals = currentUser.checkups.map(c => c.interval);
+  const nextInterval = INTERVALS.find(i => !completedIntervals.includes(i));
+
+  const grid = document.getElementById('interval-grid');
+  grid.innerHTML = INTERVALS.map(i => {
+    const done = completedIntervals.includes(i);
+    return `<div class="interval-btn ${done ? 'completed' : ''} ${i === nextInterval && !done ? 'selected' : ''}"
+      onclick="if(!${done}) { startCheckupAt(${i}); }"
+      style="${done ? 'cursor:default;' : 'cursor:pointer;'}">
+      ${i}<br><span style="font-size:0.65rem;letter-spacing:0.05em;">Days</span>
+    </div>`;
+  }).join('');
+
+  const btn = document.getElementById('start-checkup-btn');
+  if (nextInterval) {
+    btn.textContent = 'Begin ' + nextInterval + '-Day Check-Up';
+    btn.style.display = 'inline-block';
+  } else {
+    btn.textContent = '180-Day Journey Complete!';
+    btn.style.display = 'inline-block';
+  }
+  showScreen('screen-dashboard');
+}
+
+function startCheckup() {
+  const completedIntervals = currentUser.checkups.map(c => c.interval);
+  const nextInterval = INTERVALS.find(i => !completedIntervals.includes(i));
+  if (nextInterval) startCheckupAt(nextInterval);
+}
+
+// ── CHECK-UP FORM ──
+let activeInterval = null;
+let gradeState = {};
+
+function startCheckupAt(interval) {
+  activeInterval = interval;
+  gradeState = {};
+  document.getElementById('checkup-user-name').textContent = currentUser.name;
+  document.getElementById('checkup-interval-label').textContent = interval + '-Day';
+
+  const container = document.getElementById('checkup-cards');
+  container.innerHTML = '';
+
+  SESSIONS.forEach(s => {
+    const commitments = currentUser.commitments[s.key] || [];
+    if (!commitments.length) return;
+    const divider = document.createElement('div');
+    divider.className = 'section-divider';
+    divider.innerHTML = `<span>${s.number} — ${s.title}</span>`;
+    container.appendChild(divider);
+
+    commitments.forEach((text, idx) => {
+      const id = s.key + '_' + idx;
+      gradeState[id] = { grade: null, highlights: '', concerns: '' };
+      const card = document.createElement('div');
+      card.className = 'grade-card';
+      card.id = 'card-' + id;
+      card.innerHTML = `
+        <div class="grade-card-header">
+          <div class="grade-card-title">${text}</div>
+          <div class="grade-card-session">${s.number}</div>
+        </div>
+        <div class="grade-buttons">
+          <span class="grade-label">Grade:</span>
+          <button class="grade-btn grade-btn-green" id="gbtn-green-${id}" onclick="setGrade('${id}','green')">● On Track</button>
+          <button class="grade-btn grade-btn-amber" id="gbtn-amber-${id}" onclick="setGrade('${id}','amber')">● Needs Work</button>
+          <button class="grade-btn grade-btn-red"   id="gbtn-red-${id}"   onclick="setGrade('${id}','red')">● Struggling</button>
+        </div>
+        <div class="grade-fields">
+          <div>
+            <div class="grade-field-label">Highlights <span>What went well since your last check-up?</span></div>
+            <textarea class="field-textarea" id="highlights-${id}" placeholder="What has God been doing in this area of your marriage?" oninput="gradeState['${id}'].highlights=this.value"></textarea>
+          </div>
+          <div>
+            <div class="grade-field-label">Concerns <span>Where do you need to improve or seek help?</span></div>
+            <textarea class="field-textarea" id="concerns-${id}" placeholder="Where are you still struggling? Where do you need God and others?" oninput="gradeState['${id}'].concerns=this.value"></textarea>
+          </div>
+        </div>`;
+      container.appendChild(card);
+    });
+  });
+
+  showScreen('screen-checkup');
+}
+
+function setGrade(id, grade) {
+  gradeState[id].grade = grade;
+  ['green','amber','red'].forEach(g => {
+    document.getElementById('gbtn-' + g + '-' + id).classList.toggle('active', g === grade);
+  });
+  const card = document.getElementById('card-' + id);
+  card.className = 'grade-card graded-' + grade;
+}
+
+function saveCheckup() {
+  // Validate all have a grade
+  const ungradedIds = Object.keys(gradeState).filter(id => !gradeState[id].grade);
+  if (ungradedIds.length) {
+    alert('Please grade all commitments before saving.');
+    const firstCard = document.getElementById('card-' + ungradedIds[0]);
+    if (firstCard) firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  // Collect textarea values
+  Object.keys(gradeState).forEach(id => {
+    gradeState[id].highlights = (document.getElementById('highlights-' + id) || {}).value || '';
+    gradeState[id].concerns   = (document.getElementById('concerns-'   + id) || {}).value || '';
+  });
+
+  const entry = {
+    interval: activeInterval,
+    date: new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }),
+    grades: JSON.parse(JSON.stringify(gradeState))
+  };
+  currentUser.checkups.push(entry);
+  saveUserData(currentUser);
+  showDashboard();
+}
+
+// ── HISTORY ──
+function showHistory() {
+  document.getElementById('history-user-name').textContent = currentUser.name;
+  const list = document.getElementById('history-list');
+
+  if (!currentUser.checkups.length) {
+    list.innerHTML = '<p class="history-empty">No check-ups completed yet. Begin your 30-day check-up when you\'re ready.</p>';
+    showScreen('screen-history');
+    return;
+  }
+
+  list.innerHTML = currentUser.checkups.map((entry, ei) => {
+    const rows = Object.keys(entry.grades).map(id => {
+      const [sKey, idx] = id.split('_');
+      const session = SESSIONS.find(s => s.key === sKey);
+      const text = (currentUser.commitments[sKey] || [])[parseInt(idx)] || '—';
+      const g = entry.grades[id];
+      return `
+        <div class="history-commitment">
+          <div class="history-commitment-title">
+            <span class="grade-pill grade-pill-${g.grade}">${g.grade === 'green' ? 'On Track' : g.grade === 'amber' ? 'Needs Work' : 'Struggling'}</span>
+            ${text}
+          </div>
+          ${g.highlights ? `<div class="history-field-label">Highlights</div><div class="history-field-value">${g.highlights}</div>` : ''}
+          ${g.concerns   ? `<div class="history-field-label">Concerns</div><div class="history-field-value">${g.concerns}</div>`   : ''}
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="history-entry">
+        <div class="history-entry-header" onclick="toggleHistory(${ei})">
+          <div class="history-entry-title">${entry.interval}-Day Check-Up</div>
+          <div class="history-entry-date">${entry.date}</div>
+        </div>
+        <div class="history-entry-body" id="history-body-${ei}">${rows}</div>
+      </div>`;
+  }).join('');
+
+  // Open most recent by default
+  const last = currentUser.checkups.length - 1;
+  const lastBody = document.getElementById('history-body-' + last);
+  if (lastBody) lastBody.classList.add('open');
+
+  showScreen('screen-history');
+}
+
+function toggleHistory(idx) {
+  const body = document.getElementById('history-body-' + idx);
+  if (body) body.classList.toggle('open');
+}
+
+// ── BACKUP EXPORT (JSON — for device transfer) ──
+function exportBackup() {
+  if (!currentUser) return;
+  const payload = {
+    _format: 'RR_CHECKUP_BACKUP_V1',
+    _exported: new Date().toISOString(),
+    data: currentUser
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `RR_Backup_${currentUser.name}_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+}
+
+// ── READABLE EXPORT (plain text — for printing/sharing) ──
+function exportReadable() {
+  if (!currentUser) return;
+  let txt = `REFLECT/REFRESH — 180-Day Check-Up\n`;
+  txt += `Name: ${currentUser.name}\n`;
+  txt += `Exported: ${new Date().toLocaleDateString()}\n\n`;
+  txt += `${'═'.repeat(50)}\nMY COMMITMENTS\n${'═'.repeat(50)}\n\n`;
+  SESSIONS.forEach(s => {
+    txt += `${s.number}: ${s.title}\n`;
+    (currentUser.commitments[s.key] || []).forEach((c,i) => { txt += `  ${i+1}. ${c}\n`; });
+    txt += '\n';
+  });
+  if (currentUser.checkups.length) {
+    txt += `${'═'.repeat(50)}\nCHECK-UP HISTORY\n${'═'.repeat(50)}\n\n`;
+    currentUser.checkups.forEach(entry => {
+      txt += `${entry.interval}-DAY CHECK-UP — ${entry.date}\n${'─'.repeat(40)}\n`;
+      Object.keys(entry.grades).forEach(id => {
+        const [sKey, idx] = id.split('_');
+        const text = (currentUser.commitments[sKey] || [])[parseInt(idx)] || '';
+        const g = entry.grades[id];
+        const gradeLabel = g.grade === 'green' ? 'ON TRACK' : g.grade === 'amber' ? 'NEEDS WORK' : 'STRUGGLING';
+        txt += `\nCommitment: ${text}\nGrade: ${gradeLabel}\n`;
+        if (g.highlights) txt += `Highlights: ${g.highlights}\n`;
+        if (g.concerns)   txt += `Concerns: ${g.concerns}\n`;
+      });
+      txt += '\n';
+    });
+  }
+  txt += `\n"Therefore what God has joined together, let man not separate." — Mark 10:9\n`;
+  const blob = new Blob([txt], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `RR_CheckUp_${currentUser.name}_${new Date().toISOString().slice(0,10)}.txt`;
+  a.click();
+}
+
+// ── IMPORT (restore from JSON backup file) ──
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const parsed = JSON.parse(e.target.result);
+
+      // Validate it's our format
+      if (parsed._format !== 'RR_CHECKUP_BACKUP_V1' || !parsed.data || !parsed.data.name) {
+        alert('This file doesn\'t appear to be a valid REFLECT/REFRESH backup. Please use a file exported with "Backup / Transfer".');
+        input.value = '';
+        return;
+      }
+
+      const importedData = parsed.data;
+      const existingData = getUserData(importedData.name);
+
+      // If user already exists, ask before overwriting
+      if (existingData) {
+        const existingCheckups = existingData.checkups.length;
+        const importedCheckups = importedData.checkups.length;
+        const confirmed = confirm(
+          `A record for "${importedData.name}" already exists on this device with ${existingCheckups} check-up(s).\n\n` +
+          `The backup file contains ${importedCheckups} check-up(s).\n\n` +
+          `Do you want to replace the existing record with the backup?\n\n` +
+          `(Click Cancel to keep your existing record.)`
+        );
+        if (!confirmed) { input.value = ''; return; }
+      }
+
+      // Save imported data
+      const users = getUsers();
+      if (!users.includes(importedData.name)) {
+        users.push(importedData.name);
+        saveUsers(users);
+      }
+      saveUserData(importedData);
+
+      // Load and go to dashboard
+      currentUser = importedData;
+      input.value = '';
+      alert(`Welcome back, ${importedData.name}! Your data has been restored successfully.`);
+      showDashboard();
+
+    } catch (err) {
+      alert('Could not read this file. Please make sure you\'re using a backup file exported from this app.');
+      input.value = '';
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ── INIT ──
+renderUserList();
+</script>
+</body>
+</html>
